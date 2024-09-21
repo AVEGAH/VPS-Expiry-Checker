@@ -10,13 +10,41 @@ sudo apt install -y apache2 php libapache2-mod-php
 sudo mkdir -p /var/www/html/server
 
 # Download the user expiry script
-wget -O /var/www/html/server/expiry.php https://raw.githubusercontent.com/AVEGAH/VPS-Expiry-Checker/refs/heads/main/user_expiry.php
+cat << 'EOF' | sudo tee /var/www/html/server/expiry.php
+<?php
+// Database path
+$database = '/root/usuarios.db';
+
+// Get username from query parameter
+$username = isset($_GET['user']) ? $_GET['user'] : '';
+
+// Function to get expiry date
+function getExpiryDate($username, $database) {
+    // Fetch user details from the database
+    $user_details = shell_exec("grep '^$username ' $database");
+    if ($user_details) {
+        // Extract the expiry value (the second field)
+        $fields = explode(' ', trim($user_details));
+        $expiry_value = isset($fields[1]) ? (int)$fields[1] : null;
+
+        // Format the output based on expiry value
+        if ($expiry_value !== null) {
+            return "$username $expiry_value day" . ($expiry_value > 1 ? "s" : "") . " left";
+        }
+    }
+    return 'User not found.';
+}
+
+// Output the result
+$expiry_date = getExpiryDate($username, $database);
+echo $expiry_date;
+EOF
 
 # Set appropriate permissions for the PHP script
 sudo chown www-data:www-data /var/www/html/server/expiry.php
 sudo chmod 644 /var/www/html/server/expiry.php
 
-# Set permissions for the existing database file (make sure to adjust the path if needed)
+# Set permissions for the existing database file
 sudo chown www-data:www-data /root/usuarios.db
 sudo chmod 644 /root/usuarios.db
 
