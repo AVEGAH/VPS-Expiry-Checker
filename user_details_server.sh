@@ -2,7 +2,7 @@
 
 # Variables
 VPS_IP="104.248.128.202"          # Replace with your VPS IP
-PORT="9090"                   # Choose an appropriate port
+PORT="8888"                   # Choose an appropriate port
 DATABASE="/root/usuarios.db"  # Path to your user database
 
 # Function to get user details
