@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Variables
-VPS_IP="YOUR_VPS_IP"          # Replace with your VPS IP
-PORT="8080"                   # Choose an appropriate port
+VPS_IP="104.248.128.202"          # Replace with your VPS IP
+PORT="9090"                   # Choose an appropriate port
 DATABASE="/root/usuarios.db"  # Path to your user database
 
 # Function to get user details
