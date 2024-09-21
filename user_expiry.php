@@ -1,13 +1,3 @@
-#!/bin/bash
-
-# Update package index
-sudo apt update
-
-# Install Apache and PHP
-sudo apt install -y apache2 php libapache2-mod-php
-
-# Create the PHP file
-cat << 'EOF' | sudo tee /var/www/html/user_expiry.php
 <?php
 // Database path
 $database = '/root/usuarios.db';
@@ -32,13 +22,3 @@ function getExpiryDate($username, $database) {
 $expiry_date = getExpiryDate($username, $database);
 echo "Expiry Date for user $username: $expiry_date";
 ?>
-EOF
-
-# Set appropriate permissions
-sudo chown www-data:www-data /var/www/html/user_expiry.php
-sudo chmod 644 /var/www/html/user_expiry.php
-
-# Restart Apache
-sudo systemctl restart apache2
-
-echo "Setup complete! You can access the script at http://YOUR_VPS_IP/user_expiry.php?user=username"
