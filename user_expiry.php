@@ -10,9 +10,7 @@ function getExpiryDate($username, $database) {
     // Fetch user details from the database
     $user_details = shell_exec("grep '^$username ' $database");
     if ($user_details) {
-        // Assuming the expiry date is in a specific position in your database format
-        // Replace the below line with the actual way to extract the expiry date
-        // For example, let's assume the expiry date is the second field
+        // Extract the expiry value (the second field)
         $fields = explode(' ', trim($user_details));
         return isset($fields[1]) ? $fields[1] : 'Expiry date not found.';
     } else {
