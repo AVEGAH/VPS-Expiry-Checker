@@ -37,7 +37,7 @@ function getExpiryDate($username, $database) {
 
 // Output the result
 $expiry_date = getExpiryDate($username, $database);
-echo $expiry_date;
+echo "Expiry Date for user $username: " . $expiry_date;
 EOF
 
 # Set appropriate permissions for the PHP script
